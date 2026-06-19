@@ -218,21 +218,6 @@ Install all at once:
 pip install pdfplumber scikit-learn watchdog requests
 ```
 
----
-
-## 🔒 PDF Magic Number Verification
-
-The data collector validates every downloaded file before saving it by checking the first 4 bytes:
-
-```python
-if not content.startswith(b"%PDF"):
-    # Reject — could be an HTML error page or broken download
-    return False
-```
-
-Every valid PDF file begins with `%PDF` (`25 50 44 46` in hex). This prevents corrupt or misidentified files from polluting the training data.
-
----
 
 ## 📝 Logs
 
@@ -250,7 +235,7 @@ The watcher writes a persistent log to `_organizer.log` inside your Downloads fo
 
 | Variable | File | Default | Description |
 |---|---|---|---|
-| `DOWNLOAD_PATH` | `file_organizer.py` | `C:\Users\JIT DAS\Downloads` | Folder to watch |
+| `DOWNLOAD_PATH` | `file_organizer.py` | `C:\Users\Sarisht Shreshth\Downloads` | Folder to watch |
 | `MAX_PAGES` | both | `15` | Pages read per PDF for classification |
 | `MIN_CHARS` | both | `100` | Minimum characters to attempt classification |
 | `SETTLE_DELAY` | `file_organizer.py` | `2` seconds | Wait time after file appears (browser write finish) |
