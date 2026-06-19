@@ -39,13 +39,11 @@ pdf-auto-organiser/
 │   ├── research_paper/
 │   └── documentation/
 │
-├── data_collector.py            # Scrapes PDFs from open-access sources
-├── train_model.py               # Trains TF-IDF + LinearSVC pipeline
-├── file_organizer.py            # Watchdog — monitors & moves files in real time
+├── app.py            # watchdog
+
 │
 ├── model.pkl                    # Saved classifier (generated after training)
 ├── vectorizer.pkl               # Saved TF-IDF vectorizer (generated after training)
-├── label_encoder.pkl            # Saved label encoder (generated after training)
 │
 └── requirements.txt
 ```
@@ -114,11 +112,11 @@ python train_model.py
 **Output:**
 ```
 [1/4] Loading PDFs …
-  resume               → 25 usable PDFs
+  resume               → 39 usable PDFs
   medical_report       → 35 usable PDFs
-  question_paper       → 22 usable PDFs
-  research_paper       → 30 usable PDFs
-  documentation        → 28 usable PDFs
+  question_paper       → 39 usable PDFs
+  research_paper       → 39 usable PDFs
+  documentation        → 39 usable PDFs
 
   5-Fold CV Accuracy : 0.9743  ±  0.0121
 
