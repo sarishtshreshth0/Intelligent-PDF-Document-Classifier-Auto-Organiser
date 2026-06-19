@@ -1,8 +1,5 @@
 import pickle, os, pdfplumber
-from turtle import mode
 from flask import Flask, redirect , render_template , request
-
-
 
 app = Flask(__name__)
 
