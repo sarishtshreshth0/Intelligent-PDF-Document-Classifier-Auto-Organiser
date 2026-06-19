@@ -91,19 +91,8 @@ DOWNLOAD_PATH = Path(r"C:\Users\YourName\Downloads")   # Windows
 
 ## 🚀 Usage
 
-### Step 1 — Collect training data
 
-Downloads PDFs automatically from ArXiv, NIH, CBSE, MIT OCW, ReadTheDocs, and GitHub:
-
-```bash
-python data_collector.py
-```
-
-This fills the `data/` folder with ~190 PDFs across all 5 categories.
-
----
-
-### Step 2 — Train the model
+### Step 1 — Train the model
 
 ```bash
 python train_model.py
