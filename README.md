@@ -68,7 +68,7 @@ pdf-auto-organiser/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/pdf-auto-organiser.git
+git clone [https://github.com/your-username/Intelligent-PDF-Document-Classifier-Auto-Organiser]
 cd pdf-auto-organiser
 ```
 
@@ -236,21 +236,10 @@ The watcher writes a persistent log to `_organizer.log` inside your Downloads fo
 | `DOWNLOAD_PATH` | `file_organizer.py` | `C:\Users\Sarisht Shreshth\Downloads` | Folder to watch |
 | `MAX_PAGES` | both | `15` | Pages read per PDF for classification |
 | `MIN_CHARS` | both | `100` | Minimum characters to attempt classification |
-| `SETTLE_DELAY` | `file_organizer.py` | `2` seconds | Wait time after file appears (browser write finish) |
-| `TARGET_PER_CAT` | `data_collector.py` | `40` | Target PDFs per category during collection |
+| `SETTLE_DELAY` | `app.py` | `2` seconds | Wait time after file appears (browser write finish) |
 
----
 
-## 🤝 Contributing
 
-Pull requests are welcome. To add a new category:
-
-1. Add source URLs to `SOURCES` dict in `data_collector.py`
-2. Run `python data_collector.py` to collect samples
-3. Re-run `python train_model.py` to retrain
-4. The watcher picks up the new model automatically on next start
-
----
 
 ## 👤 Author
 
