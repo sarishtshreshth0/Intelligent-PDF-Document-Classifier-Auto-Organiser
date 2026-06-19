@@ -272,4 +272,4 @@ Pull requests are welcome. To add a new category:
 ## 👤 Author
 
 **Sarisht Shreshth**
-[GitHub](https://github.com) · [LinkedIn](https://linkedin.com) · [CodeChef](https://codechef.com)
+[GitHub]([https://github.com](https://github.com/sarishtshreshth0)) · [LinkedIn]([https://linkedin.com](https://www.linkedin.com/in/sarisht-shreshth/)) · [CodeChef]([https://codechef.com](https://www.codechef.com/users/sarishtshresht))
