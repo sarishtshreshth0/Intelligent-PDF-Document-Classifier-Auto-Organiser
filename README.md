@@ -233,4 +233,4 @@ The watcher writes a persistent log to `_organizer.log` inside your Downloads fo
 ## 👤 Author
 
 **Sarisht Shreshth**
-[GitHub]([https://github.com](https://github.com/sarishtshreshth0)) · [LinkedIn]([https://linkedin.com](https://www.linkedin.com/in/sarisht-shreshth/)) · [CodeChef]([https://codechef.com](https://www.codechef.com/users/sarishtshresht))
+[GitHub]([https://github.com/sarishtshreshth0/Intelligent-PDF-Document-Classifier-Auto-Organiser]) · [LinkedIn]([https://www.linkedin.com/in/sarisht-shreshth/]) · [CodeChef]([https://www.codechef.com/users/sarishtshresht])
