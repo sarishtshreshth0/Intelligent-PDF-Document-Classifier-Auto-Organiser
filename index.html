@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Manager</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Google Sans',Arial,sans-serif;}
+body{background:#e8eaed;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+
+.shell{background:#f1f3f4;width:960px;border-radius:12px;overflow:hidden;border:0.5px solid #dadce0;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
+
+/* Title bar */
+.titlebar{height:40px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:8px;border-bottom:0.5px solid #e0e0e0;}
+.tb-dot{width:14px;height:14px;border-radius:50%;cursor:pointer;}
+.tb-close{background:#ea4335;}
+.tb-min{background:#fbbc04;}
+.tb-max{background:#34a853;}
+.tb-addr{flex:1;background:#f1f3f4;border-radius:20px;height:28px;display:flex;align-items:center;padding:0 14px;font-size:12px;color:#5f6368;margin:0 12px;gap:6px;}
+.tb-icons{display:flex;gap:12px;color:#5f6368;font-size:17px;}
+
+/* Toolbar */
+.toolbar{height:48px;background:#fff;display:flex;align-items:center;padding:0 10px;gap:4px;border-bottom:0.5px solid #e0e0e0;}
+.t-btn{height:32px;min-width:32px;padding:0 10px;border-radius:20px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;color:#3c4043;}
+.t-btn:hover{background:#f1f3f4;}
+.t-sep{width:0.5px;height:20px;background:#e0e0e0;margin:0 4px;}
+.t-upload{background:#1a73e8;color:#fff;border-radius:20px;border:none;padding:0 20px;height:32px;font-size:13px;font-weight:500;cursor:pointer;margin-left:auto;display:flex;align-items:center;gap:8px;}
+.t-upload:hover{background:#1557b0;}
+
+/* Body layout */
+.body{display:flex;min-height:580px;}
+
+/* Sidebar */
+.sidebar{width:220px;background:#fff;padding:8px 0;border-right:0.5px solid #e0e0e0;flex-shrink:0;}
+.s-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;color:#3c4043;cursor:pointer;border-radius:0 24px 24px 0;margin-right:8px;transition:.15s;}
+.s-item:hover{background:#f1f3f4;}
+.s-item.active{background:#e8f0fe;color:#1a73e8;}
+.s-icon{font-size:17px;width:20px;text-align:center;}
+.s-sect{font-size:11px;font-weight:600;color:#5f6368;padding:12px 16px 4px;letter-spacing:.5px;text-transform:uppercase;}
+
+/* Main area */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f1f3f4;}
+
+/* Path bar */
+.path-bar{height:40px;display:flex;align-items:center;padding:0 16px;gap:6px;font-size:13px;color:#5f6368;border-bottom:0.5px solid #e0e0e0;background:#fff;}
+.path-crumb{color:#1a73e8;cursor:pointer;}
+.path-crumb:hover{text-decoration:underline;}
+
+/* Upload area */
+.upload-section{padding:16px;background:#fff;border-bottom:0.5px solid #e0e0e0;}
+.upload-dropzone{border:1.5px dashed #dadce0;border-radius:10px;padding:20px 16px;display:flex;align-items:center;gap:14px;background:#f8f9fa;transition:.2s;}
+.upload-dropzone:hover{border-color:#1a73e8;background:#e8f0fe;}
+.upload-dropzone input[type=file]{flex:1;font-size:13px;color:#3c4043;border:none;background:transparent;outline:none;}
+.upload-dropzone input[type=file]::file-selector-button{background:#1a73e8;color:#fff;border:none;padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;margin-right:12px;}
+.upload-dropzone input[type=file]::file-selector-button:hover{background:#1557b0;}
+.upload-submit{background:#1a73e8;color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.upload-submit:hover{background:#1557b0;}
+
+/* Predicted folder chip */
+.predicted-chip{margin:14px 16px 0;display:inline-flex;align-items:center;gap:8px;background:#e8f0fe;border:0.5px solid #c5d8f9;border-radius:20px;padding:6px 14px;font-size:13px;color:#1a73e8;}
+.predicted-chip .chip-label{font-size:11px;color:#5f6368;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-right:4px;}
+
+/* Files section */
+.files-section{flex:1;padding:16px;overflow-y:auto;}
+.section-title{font-size:13px;font-weight:600;color:#5f6368;margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+
+/* Folder block */
+.folder-block{background:#fff;border-radius:10px;border:0.5px solid #e0e0e0;margin-bottom:16px;overflow:hidden;}
+.folder-header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:0.5px solid #f1f3f4;cursor:pointer;}
+.folder-header:hover{background:#f8f9fa;}
+.folder-name-text{font-size:14px;font-weight:600;color:#3c4043;flex:1;}
+.folder-count{font-size:12px;color:#9aa0a6;}
+
+/* File list rows inside folder */
+.file-list{padding:4px 0;}
+.f-row{display:flex;align-items:center;padding:9px 16px;gap:10px;font-size:13px;color:#3c4043;cursor:pointer;transition:.15s;}
+.f-row:hover{background:#f8f9fa;}
+.f-row:hover .f-actions{opacity:1;}
+.f-icon{font-size:20px;width:24px;text-align:center;flex-shrink:0;}
+.f-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.f-actions{opacity:0;display:flex;gap:4px;transition:.15s;}
+.f-action-btn{border:none;background:transparent;cursor:pointer;padding:6px;border-radius:50%;color:#5f6368;font-size:15px;display:flex;align-items:center;}
+.f-action-btn:hover{background:#f1f3f4;}
+.f-divider{height:0.5px;background:#f1f3f4;margin:0 16px;}
+
+/* Empty state */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;color:#9aa0a6;font-size:13px;gap:10px;}
+.empty-state i{font-size:40px;color:#dadce0;}
+
+/* Status bar */
+.status-bar{height:32px;background:#fff;border-top:0.5px solid #e0e0e0;display:flex;align-items:center;padding:0 16px;font-size:12px;color:#5f6368;gap:16px;}
+
+@media(max-width:700px){
+  body{padding:0;}
+  .shell{width:100%;border-radius:0;}
+  .sidebar{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Title bar -->
+  <div class="titlebar">
+    <div class="tb-dot tb-close"></div>
+    <div class="tb-dot tb-min"></div>
+    <div class="tb-dot tb-max"></div>
+    <div class="tb-addr">
+      <i class="ti ti-folder" style="font-size:14px;color:#1a73e8"></i>
+      Document Manager › All Files
+    </div>
+    <div class="tb-icons">
+      <i class="ti ti-search" title="Search"></i>
+      <i class="ti ti-layout-grid" title="Grid view"></i>
+      <i class="ti ti-arrows-sort" title="Sort"></i>
+      <i class="ti ti-dots-vertical" title="More"></i>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="t-btn"><i class="ti ti-chevron-left" style="font-size:17px"></i></button>
+    <button class="t-btn"><i class="ti ti-chevron-right" style="font-size:17px"></i></button>
+    <div class="t-sep"></div>
+    <button class="t-btn active"><i class="ti ti-list" style="font-size:17px"></i></button>
+    <button class="t-btn"><i class="ti ti-layout-grid" style="font-size:17px"></i></button>
+    <button class="t-upload" onclick="document.getElementById('fileInput').click()">
+      <i class="ti ti-upload" style="font-size:15px"></i> Upload File
+    </button>
+  </div>
+
+  <div class="body">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="s-item active"><span class="s-icon"><i class="ti ti-home"></i></span>Desktop</div>
+      <div class="s-item"><span class="s-icon"><i class="ti ti-files"></i></span>Documents</div>
+      <div class="s-item"><span class="s-icon"><i class="ti ti-download"></i></span>Downloads</div>
+      <div class="s-item"><span class="s-icon"><i class="ti ti-photo"></i></span>Pictures</div>
+      <div class="s-sect">Locations</div>
+      <div class="s-item"><span class="s-icon"><i class="ti ti-cloud"></i></span>iCloud Drive</div>
+      <div class="s-item"><span class="s-icon"><i class="ti ti-users"></i></span>Shared</div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+
+      <!-- Path bar -->
+      <div class="path-bar">
+        <span class="path-crumb">Home</span>
+        <span style="color:#9aa0a6;font-size:12px">›</span>
+        <span style="color:#3c4043;font-weight:500">Document Manager</span>
+      </div>
+
+      <!-- Upload section -->
+      <div class="upload-section">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <div class="upload-dropzone">
+            <i class="ti ti-cloud-upload" style="font-size:24px;color:#1a73e8;flex-shrink:0"></i>
+            <input type="file" name="file" id="fileInput" required>
+            <button class="upload-submit" type="submit">
+              <i class="ti ti-upload" style="font-size:14px"></i> Upload
+            </button>
+          </div>
+        </form>
+
+      
+      <!-- Files section -->
+      <div class="files-section">
+        <div class="section-title">Uploaded Files</div>
+
+        {% if folders %}
+          {% for folder, files in folders.items() %}
+          <div class="folder-block">
+            <div class="folder-header">
+              <i class="ti ti-folder-filled" style="font-size:20px;color:#fbbc04"></i>
+              <span class="folder-name-text">{{ folder }}</span>
+              <span class="folder-count">{{ files|length }} item{{ 's' if files|length != 1 else '' }}</span>
+              <i class="ti ti-chevron-down" style="font-size:16px;color:#9aa0a6"></i>
+            </div>
+
+            {% if files %}
+            <div class="file-list">
+              {% for file in files %}
+              <div class="f-row">
+                <span class="f-icon">📄</span>
+                <span class="f-name">{{ file }}</span>
+                <div class="f-actions">
+                  <a href="/file/{{ folder }}/{{ file }}" class="f-action-btn" title="Open">
+                    <i class="ti ti-external-link"></i>
+                  </a>
+                  <button class="f-action-btn" title="More options">
+                    <i class="ti ti-dots-vertical"></i>
+                  </button>
+                </div>
+              </div>
+              {% if not loop.last %}<div class="f-divider"></div>{% endif %}
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+              <i class="ti ti-folder-open"></i>
+              <span>No files in this folder</span>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state" style="margin-top:32px;">
+            <i class="ti ti-folder-off"></i>
+            <span>No folders found yet. Upload a file to get started.</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Status bar -->
+      <div class="status-bar">
+        <i class="ti ti-info-circle" style="font-size:14px"></i>
+        <span>Document Manager &nbsp;·&nbsp; Drag and drop files to upload</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
