@@ -1,0 +1,5 @@
+Flask
+gunicorn
+os
+pdfplumber
+pickle
